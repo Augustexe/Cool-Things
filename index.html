@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Little Surprise For You 💕</title>
+  
+  <!--
+  ╔════════════════════════════════════════════════════════════════════════════╗
+  ║                                                                            ║
+  ║   🎀 LINABELL'S CHEER-UP POP-UP WEBSITE 🎀                                 ║
+  ║                                                                            ║
+  ║   A heartfelt, playful surprise page with accumulating pop-up messages     ║
+  ║                                                                            ║
+  ╠════════════════════════════════════════════════════════════════════════════╣
+  ║                                                                            ║
+  ║   HOW TO USE THIS FILE:                                                    ║
+  ║                                                                            ║
+  ║   1. CUSTOMIZE MESSAGES                                                    ║
+  ║      Scroll to the JavaScript section and find the "Message Bank"          ║
+  ║      and "Emoji Bank" sections. Add your own messages and emojis!          ║
+  ║                                                                            ║
+  ║   2. ADD/CHANGE IMAGES                                                     ║
+  ║      Create an "images" folder next to this file                           ║
+  ║      Add your images there and update the paths in the HTML section        ║
+  ║      Look for: 🎨 CUSTOMIZE: Image Paths                                   ║
+  ║                                                                            ║
+  ║   3. MODIFY COLORS                                                         ║
+  ║      Find the CSS section at the top of <style>                            ║
+  ║      Look for: 🎨 CUSTOMIZE: Color Scheme                                  ║
+  ║      Change the CSS variable values to your preferred colors               ║
+  ║                                                                            ║
+  ║   4. OPEN IN BROWSER                                                       ║
+  ║      Simply double-click this file, or right-click and choose              ║
+  ║      "Open with" → your preferred browser (Chrome, Firefox, etc.)          ║
+  ║                                                                            ║
+  ║   5. TESTING TIP                                                           ║
+  ║      Start with just 3-5 messages to test, then add your full list!        ║
+  ║                                                                            ║
+  ╚════════════════════════════════════════════════════════════════════════════╝
+  -->
+
+  <!-- Google Fonts - For offline use, download these fonts and use @font-face -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ========================================
+       🎨 CUSTOMIZE: Color Scheme
+       Change these values to adjust all colors
+       throughout the page. Use any valid CSS
+       color (hex, rgb, hsl, or color names).
+       ======================================== */
+    :root {
+      /* Background Colors */
+      --bg-page: #FAD4D4;           /* Main page background - soft pink */
+      --bg-content: #FFF5F5;        /* Content card background - cream */
+      --bg-popup: #FFF8F8;          /* Pop-up background - light pink */
+      
+      /* LinaBell-Inspired Pinks */
+      --pink-light: #F8D4D8;        /* Light accent pink */
+      --pink-medium: #E8B4B8;       /* Medium dusty rose */
+      --pink-deep: #D4A5A5;         /* Deep mauve pink */
+      
+      /* Accent Colors */
+      --accent-coral: #F27E63;      /* Primary button color - coral */
+      --accent-purple: #B8A4C9;     /* Secondary accent - purple (LinaBell's flower) */
+      --accent-blue: #7BA3C9;       /* Sparkle accent - blue */
+      
+      /* Text Colors */
+      --text-dark: #5D4E4E;         /* Main heading text */
+      --text-muted: #8B7B7B;        /* Secondary/body text */
+      --text-light: #FFFFFF;        /* Light text on dark backgrounds */
+      
+      /* Borders & Shadows */
+      --border-soft: #E8C0C0;       /* Soft pink border */
+      --border-purple: #C9B8D9;     /* Purple border for "No" popup */
+      --shadow-color: rgba(232, 180, 184, 0.4);  /* Pink-tinted shadow */
+      --shadow-purple: rgba(184, 164, 201, 0.4); /* Purple-tinted shadow */
+    }
+
+    /* ========================================
+       🎨 CUSTOMIZE: Font Choices
+       Change the font families here.
+       Make sure to update the Google Fonts
+       link above if you choose different fonts.
+       ======================================== */
+    :root {
+      --font-heading: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Nunito', 'Quicksand', sans-serif;
+    }
+
+    /* ========================================
+       BASE STYLES
+       ======================================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg-page);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* ========================================
+       DECORATIVE FLOATING ELEMENTS
+       ======================================== */
+    .floating-decorations {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .floating-heart {
+      position: absolute;
+      font-size: 24px;
+      opacity: 0.6;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .floating-heart:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
+    .floating-heart:nth-child(2) { top: 20%; right: 8%; animation-delay: 1s; }
+    .floating-heart:nth-child(3) { top: 60%; left: 3%; animation-delay: 2s; }
+    .floating-heart:nth-child(4) { top: 75%; right: 5%; animation-delay: 0.5s; }
+    .floating-heart:nth-child(5) { top: 40%; left: 8%; animation-delay: 1.5s; }
+    .floating-heart:nth-child(6) { top: 85%; left: 15%; animation-delay: 3s; }
+    .floating-heart:nth-child(7) { top: 15%; right: 15%; animation-delay: 2.5s; }
+    .floating-heart:nth-child(8) { top: 50%; right: 3%; animation-delay: 4s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(10deg); }
+    }
+
+    /* ========================================
+       MAIN CONTENT CARD
+       ======================================== */
+    .main-card {
+      background-color: var(--bg-content);
+      border: 3px solid var(--border-soft);
+      border-radius: 24px;
+      padding: 50px 60px;
+      padding-bottom: 20px; /* Reduced to make room for character row */
+      text-align: center;
+      max-width: 520px;
+      width: 90%;
+      position: relative;
+      z-index: 10;
+      box-shadow: 0 12px 40px var(--shadow-color);
+      overflow: visible; /* Allow characters to overflow */
+    }
+
+    /* Wrapper to hold card + character row together */
+    .card-wrapper {
+      position: relative;
+      z-index: 10;
+    }
+
+    /* ========================================
+       🎨 CUSTOMIZE: Header Icon/Image
+       You can replace the emoji with an image
+       by uncommenting the img tag below
+       ======================================== */
+    .header-icon {
+      font-size: 48px;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    /* If using an image instead:
+    .header-icon img {
+      width: 80px;
+      height: auto;
+    }
+    */
+
+    /* ========================================
+       TYPOGRAPHY STYLES
+       ======================================== */
+    .main-question {
+      font-family: var(--font-heading);
+      font-size: 2.4rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 16px;
+      line-height: 1.3;
+    }
+
+    .sub-text {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+
+    /* ========================================
+       BUTTON STYLES
+       ======================================== */
+    .button-container {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      font-family: var(--font-body);
+      font-size: 1.1rem;
+      font-weight: 600;
+      padding: 14px 40px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid var(--accent-coral);
+      min-width: 120px;
+    }
+
+    .btn-yes {
+      background-color: var(--accent-coral);
+      color: var(--text-light);
+    }
+
+    .btn-yes:hover {
+      background-color: #e06a4f;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(242, 126, 99, 0.4);
+    }
+
+    .btn-no {
+      background-color: transparent;
+      color: var(--accent-coral);
+    }
+
+    .btn-no:hover {
+      background-color: var(--accent-coral);
+      color: var(--text-light);
+      transform: translateY(-2px);
+    }
+
+    /* ========================================
+       🎨 CUSTOMIZE: Character Row Area
+       A row of overlapping images/GIFs at the bottom
+       Similar to the cute cat row style
+       ======================================== */
+    .character-row {
+      position: relative;
+      margin-top: -40px; /* Overlap with the card above */
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      z-index: 15; /* Above the card */
+      padding-top: 20px; /* Space for hearts */
+    }
+
+    .character-row-inner {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+    }
+
+    .character-item {
+      flex-shrink: 0;
+      width: 75px;
+      margin-left: -12px; /* Overlap amount */
+      position: relative;
+      transition: transform 0.3s ease;
+    }
+
+    .character-item:first-child {
+      margin-left: 0; /* No overlap on first item */
+    }
+
+    /* Staggered z-index for natural overlapping look */
+    .character-item:nth-child(1) { z-index: 1; }
+    .character-item:nth-child(2) { z-index: 2; }
+    .character-item:nth-child(3) { z-index: 3; }
+    .character-item:nth-child(4) { z-index: 4; }
+    .character-item:nth-child(5) { z-index: 3; }
+    .character-item:nth-child(6) { z-index: 2; }
+    .character-item:nth-child(7) { z-index: 1; }
+    .character-item:nth-child(8) { z-index: 2; }
+    .character-item:nth-child(9) { z-index: 1; }
+
+    /* Hover effect */
+    .character-item:hover {
+      transform: translateY(-8px);
+      z-index: 20 !important;
+    }
+
+    .character-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      background: transparent;
+    }
+
+    /* Floating hearts above character row */
+    .row-decorations {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      gap: 80px;
+      pointer-events: none;
+    }
+
+    .row-heart {
+      font-size: 18px;
+      animation: floatHeart 2s ease-in-out infinite;
+    }
+
+    .row-heart:nth-child(2) {
+      animation-delay: 0.5s;
+    }
+
+    .row-heart:nth-child(3) {
+      animation-delay: 1s;
+    }
+
+    @keyframes floatHeart {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-8px) scale(1.1); }
+    }
+
+    /* Placeholder styling when no images added yet */
+    .row-placeholder {
+      background: linear-gradient(135deg, var(--pink-light), var(--pink-medium));
+      border-radius: 16px;
+      padding: 30px 20px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      text-align: center;
+      width: 80%;
+      max-width: 300px;
+    }
+
+    /* When placeholder is shown, don't overlap */
+    .character-row:has(.row-placeholder) {
+      margin-top: 0;
+      padding-top: 30px;
+    }
+    
+    /* Fallback for browsers that don't support :has() */
+    .character-row--with-placeholder {
+      margin-top: 0;
+      padding-top: 30px;
+    }
+
+    /* ========================================
+       🎨 CUSTOMIZE: Pop-Up Styling
+       Adjust these values to change how
+       the pop-up windows look
+       ======================================== */
+    .popup {
+      position: fixed;
+      background-color: var(--bg-popup);
+      border: 2px solid var(--border-soft);
+      border-radius: 16px;
+      padding: 12px 16px;
+      min-width: 160px;
+      max-width: 180px;
+      box-shadow: 0 8px 32px var(--shadow-color);
+      cursor: grab;
+      user-select: none;
+      animation: popupAppear 0.3s ease-out forwards;
+      opacity: 0;
+      transform: scale(0.8);
+    }
+
+    .popup:active {
+      cursor: grabbing;
+    }
+
+    @keyframes popupAppear {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .popup-content {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-wrap: nowrap;
+      justify-content: center;
+    }
+
+    .popup-emoji {
+      font-size: 32px;
+      display: inline-block;
+      margin: 0;
+      flex-shrink: 0;
+    }
+
+    .popup-message {
+      font-size: 0.85rem;
+      color: var(--text-dark);
+      line-height: 1.4;
+      font-weight: 500;
+      margin: 0;
+      flex-shrink: 1;
+    }
+
+    /* Special styling for "No" path popups */
+    .popup-special {
+      border-color: var(--border-purple);
+      box-shadow: 0 8px 32px var(--shadow-purple);
+      background: linear-gradient(135deg, #FFF8FB, #F8F0FF);
+      min-width: 240px;
+      max-width: 280px;
+      padding: 20px;
+    }
+
+    .popup-special .popup-content {
+      flex-direction: column;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .popup-special .popup-emoji {
+      font-size: 40px;
+      margin-bottom: 6px;
+    }
+
+    .popup-special .popup-message {
+      font-size: 1rem;
+    }
+
+    .popup-special .popup-buttons {
+      margin-top: 20px;
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .popup-special .btn {
+      padding: 10px 28px;
+      font-size: 1rem;
+    }
+
+    /* Final "No" popup - no buttons, just message */
+    .popup-final {
+      border-color: var(--pink-medium);
+    }
+
+    /* ========================================
+       FIXED BUTTON CONTAINER
+       Keeps Yes/No accessible above popups
+       ======================================== */
+    .fixed-buttons {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 999999;
+      display: none; /* Hidden until first popup appears */
+    }
+
+    .fixed-buttons .btn {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    /* ========================================
+       SMALL DECORATIVE FLOWER
+       ======================================== */
+    .flower-decoration {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      font-size: 28px;
+      transform: rotate(15deg);
+    }
+
+    /* ========================================
+       📱 MOBILE RESPONSIVE STYLES
+       Optimized for iPhone screens
+       (375px - 430px width)
+       ======================================== */
+    
+    /* Tablets and smaller */
+    @media screen and (max-width: 768px) {
+      .main-card {
+        padding: 40px 35px;
+        margin: 15px;
+        width: calc(100% - 30px);
+        max-width: 400px;
+      }
+
+      .main-question {
+        font-size: 2rem;
+      }
+
+      .sub-text {
+        font-size: 1rem;
+        margin-bottom: 24px;
+      }
+
+      .header-icon {
+        font-size: 40px;
+        margin-bottom: 16px;
+      }
+
+      .character-image img {
+        max-width: 220px;
+      }
+
+      /* Character row responsive */
+      .character-row {
+        margin-top: -30px;
+        padding-top: 15px;
+      }
+
+      .character-item {
+        width: 60px;
+        margin-left: -10px;
+      }
+
+      .row-decorations {
+        gap: 50px;
+      }
+
+      .row-heart {
+        font-size: 14px;
+      }
+    }
+
+    /* iPhone and small phones */
+    @media screen and (max-width: 430px) {
+      body {
+        padding: 10px;
+        align-items: flex-start;
+        padding-top: 30px;
+      }
+
+      .main-card {
+        padding: 30px 24px;
+        margin: 10px;
+        width: calc(100% - 20px);
+        border-radius: 20px;
+      }
+
+      .main-question {
+        font-size: 1.65rem;
+        margin-bottom: 12px;
+      }
+
+      .sub-text {
+        font-size: 0.95rem;
+        margin-bottom: 20px;
+      }
+
+      .header-icon {
+        font-size: 36px;
+        margin-bottom: 14px;
+      }
+
+      .btn {
+        font-size: 1rem;
+        padding: 12px 28px;
+        min-width: 100px;
+      }
+
+      .button-container {
+        gap: 12px;
+      }
+
+      /* Character row mobile */
+      .character-row {
+        margin-top: -25px;
+        padding-top: 12px;
+      }
+
+      .character-item {
+        width: 50px;
+        margin-left: -8px;
+      }
+
+      .row-decorations {
+        gap: 40px;
+      }
+
+      .row-heart {
+        font-size: 12px;
+      }
+
+      .row-placeholder {
+        padding: 20px 15px;
+        font-size: 0.8rem;
+        width: 85%;
+      }
+      
+      .character-row:has(.row-placeholder) {
+        margin-top: 0;
+        padding-top: 20px;
+      }
+
+      /* Mobile Pop-up Styling */
+      .popup {
+        min-width: 140px;
+        max-width: 160px;
+        padding: 10px 12px;
+        border-radius: 14px;
+      }
+
+      .popup-emoji {
+        font-size: 28px;
+      }
+
+      .popup-message {
+        font-size: 0.75rem;
+      }
+
+      .popup-special .popup-buttons {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .popup-special .btn {
+        width: 100%;
+        padding: 12px 20px;
+      }
+
+      .flower-decoration {
+        font-size: 22px;
+        top: -8px;
+        right: -8px;
+      }
+
+      /* Fixed button at bottom */
+      .fixed-buttons {
+        bottom: 20px;
+      }
+
+      .fixed-buttons .btn {
+        padding: 14px 36px;
+        font-size: 1.05rem;
+      }
+
+      /* Floating decorations - fewer and smaller on mobile */
+      .floating-heart {
+        font-size: 18px;
+        opacity: 0.5;
+      }
+
+      .floating-heart:nth-child(n+6) {
+        display: none; /* Hide some on mobile for cleaner look */
+      }
+    }
+
+    /* Very small phones (iPhone SE, older models) */
+    @media screen and (max-width: 375px) {
+      .main-card {
+        padding: 24px 20px;
+      }
+
+      .main-question {
+        font-size: 1.5rem;
+      }
+
+      .sub-text {
+        font-size: 0.9rem;
+      }
+
+      .btn {
+        font-size: 0.95rem;
+        padding: 11px 24px;
+      }
+
+      .popup {
+        min-width: 130px;
+        max-width: 150px;
+        padding: 9px 11px;
+      }
+
+      .popup-emoji {
+        font-size: 26px;
+      }
+
+      .popup-message {
+        font-size: 0.7rem;
+      }
+
+      /* Character row for very small screens */
+      .character-row {
+        margin-top: -20px;
+        padding-top: 10px;
+      }
+
+      .character-item {
+        width: 42px;
+        margin-left: -6px;
+      }
+
+      .row-decorations {
+        gap: 30px;
+      }
+
+      .row-heart {
+        font-size: 10px;
+      }
+    }
+
+    /* Prevent horizontal scroll on mobile */
+    html, body {
+      overflow-x: hidden;
+    }
+
+    /* Improve touch targets */
+    @media (pointer: coarse) {
+      .btn {
+        min-height: 48px;
+        min-width: 48px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Background Decorations -->
+  <div class="floating-decorations">
+    <!-- 🎨 CUSTOMIZE: Change these emojis to anything you like! -->
+    <span class="floating-heart">💕</span>
+    <span class="floating-heart">🌸</span>
+    <span class="floating-heart">✨</span>
+    <span class="floating-heart">💖</span>
+    <span class="floating-heart">🎀</span>
+    <span class="floating-heart">💗</span>
+    <span class="floating-heart">🌷</span>
+    <span class="floating-heart">⭐</span>
+  </div>
+
+  <!-- Main Content Wrapper -->
+  <div class="card-wrapper">
+    
+    <!-- Main Content Card -->
+    <div class="main-card">
+      
+      <!-- ========================================
+           🎨 CUSTOMIZE: Header Icon
+           Replace the emoji or use an image
+           ======================================== -->
+      <span class="header-icon">🦊</span>
+      <!-- Or use an image:
+      <div class="header-icon">
+        <img src="images/linabell-icon.png" alt="LinaBell">
+      </div>
+      -->
+
+      <!-- ========================================
+           🎨 CUSTOMIZE: Main Question
+           Change this to your personalized question
+           ======================================== -->
+      <h1 class="main-question">心情不好?</h1>
+
+      <!-- ========================================
+           🎨 CUSTOMIZE: Sub Text
+           Optional subtitle or description
+           ======================================== -->
+      <p class="sub-text"></p>
+
+      <!-- ========================================
+           🎨 CUSTOMIZE: Button Text
+           Change the text inside each button
+           ======================================== -->
+      <div class="button-container">
+        <button class="btn btn-yes" id="mainYesBtn">哄我！</button>
+        <button class="btn btn-no" id="mainNoBtn">开心</button>
+      </div>
+
+    </div>
+
+    <!-- ========================================
+         🎨 CUSTOMIZE: Character Row
+         Add your images/GIFs here!
+         
+         HOW TO USE:
+         1. Add your GIF/image files to the "images" folder
+         2. Uncomment the character-row-inner div below
+         3. Delete or comment out the row-placeholder div
+         4. Update each img src to your file path
+         
+         TIPS:
+         - Use transparent PNG or GIF for best overlap effect
+         - Recommended: 5-9 images for best look
+         - GIFs will animate automatically!
+         ======================================== -->
+    <div class="character-row">
+      
+      <!-- Floating hearts decoration above the row -->
+      <div class="row-decorations">
+        <span class="row-heart">💕</span>
+        <span class="row-heart">💖</span>
+        <span class="row-heart">💕</span>
+      </div>
+
+ 
+      <div class="character-row-inner">
+        <div class="character-item">
+          <img src="images/char1.png" alt="Character 1">
+        </div>
+        <div class="character-item">
+          <img src="images/char2.png" alt="Character 2">
+        </div>
+        <div class="character-item">
+          <img src="images/char3.png" alt="Character 3">
+        </div>
+        <div class="character-item">
+          <img src="images/char4.png" alt="Character 4">
+        </div>
+        <div class="character-item">
+          <img src="images/char5.png" alt="Character 5">
+        </div>
+      </div>
+      
+
+    </div>
+
+  </div>
+
+  <!-- Fixed Buttons (appears after first popup) -->
+
+
+  <!-- Pop-ups will be dynamically added here by JavaScript -->
+
+  <script>
+    /* ========================================
+       🎨 CUSTOMIZE: Message Bank
+       Add your cheerful messages between the quotes.
+       Add as many as you want! Each message should
+       be wrapped in quotes and followed by a comma.
+       
+       TIP: Start with 3-5 messages to test,
+       then add your full list!
+       ======================================== */
+    const messageBank = [
+      "多喝热水",
+      "开心点，不开心就找我呀",
+      "一切都会好起来的！",
+      "慢慢来，我在呢",
+      "撑住，等我满血复活",
+      "难受就说出来，别自己憋着",
+      "乖，先把自己照顾好",
+      "别想太多，先吃点好吃的",
+      "比莉娜贝尔可爱的女人有什么好难受的",
+      "六，我直接一个大动脉心疼",
+      "Baby Dont Cry - EXO",
+      "抱一下",
+      "小宝宝还小，我们什么也不怕",
+      "你难受我比你还急，快点恢复，听话",
+      "快点好起来，不然我会一直想着你",
+  
+       "我在，不要怕",
+        "想哭就哭出来，别憋着",
+        "难关过不去，那就把难关击碎",
+        "笑出来",
+        "陪你哭？",
+        "你可以脆弱",
+        "分我一半",
+         "我也不想看到你难受",
+         "想吃好吃的了么？",
+         "请你吃好吃的！",
+        "想让你知道，有人在乎你",    
+          "怎么了，谁欺负你了，我去骂他",
+          "不开心就发脾气，我接着",
+          "我没办法让你马上开心，但我可以陪你一起不开心",
+          "想听歌吗？我给你放",
+         
+        
+      // Add more messages above this line!
+    ];
+
+    /* ========================================
+       🎨 CUSTOMIZE: Emoji Bank
+       Add emojis between the quotes.
+       These will randomly appear with messages.
+       ======================================== */
+    const emojiBank = [
+      "💖", "✨", "🌸", "💕", "🦊",
+      "🎀", "💗", "⭐", "🌷", "💜",
+      "🌟", "💝", "🎉", "🥰", "💫",
+      "🤍", "❤️‍🩹", 
+      // Add more emojis above this line!
+    ];
+
+    /* ========================================
+       🎨 CUSTOMIZE: "No" Pop-Up Message
+       This appears when the landing "No" is clicked
+       ======================================== */
+    const noPopupMessage = "真的？";
+
+    /* ========================================
+       🎨 CUSTOMIZE: Final "No" Message
+       This appears when secondary "No" is clicked
+       ======================================== */
+    const finalNoMessage = "讨厌你❤️‍🩹";
+
+    /* ========================================
+       JAVASCRIPT LOGIC
+       (No customization needed below unless
+       you want to modify functionality)
+       ======================================== */
+
+    // Shuffle array using Fisher-Yates algorithm
+    function shuffleArray(array) {
+      const shuffled = [...array];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      return shuffled;
+    }
+
+    // State management
+    let shuffledMessages = shuffleArray(messageBank);
+    let messageIndex = 0;
+    let zIndexCounter = 1000;
+    let popupCount = 0;
+
+    // Get next message (reshuffles when exhausted)
+    function getNextMessage() {
+      if (messageIndex >= shuffledMessages.length) {
+        shuffledMessages = shuffleArray(messageBank);
+        messageIndex = 0;
+      }
+      return shuffledMessages[messageIndex++];
+    }
+
+    // Get random emoji
+    function getRandomEmoji() {
+      return emojiBank[Math.floor(Math.random() * emojiBank.length)];
+    }
+
+    // Calculate random position within viewport (responsive)
+    function getRandomPosition() {
+      // Detect mobile and adjust popup size estimate accordingly
+      const isMobile = window.innerWidth <= 430;
+      const popupWidth = isMobile ? 260 : 300;
+      const popupHeight = isMobile ? 140 : 150;
+      
+      const padding = isMobile ? 10 : 20;
+      let x, y;
+      
+      // Keep trying until we find a position that doesn't overlap with the center buttons
+      let attempts = 0;
+      do {
+        const maxX = Math.max(padding, window.innerWidth - popupWidth - padding);
+        const maxY = Math.max(padding, window.innerHeight - popupHeight - padding - 150); // Account for fixed button
+        
+        x = Math.floor(Math.random() * (maxX - padding)) + padding;
+        y = Math.floor(Math.random() * (maxY - padding)) + padding;
+        
+        attempts++;
+        // Avoid center area where main buttons are (approximately 520px wide, centered)
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+        const avoidRadius = 300; // Radius around center to avoid
+        
+        const distance = Math.sqrt(Math.pow(x + popupWidth/2 - centerX, 2) + Math.pow(y + popupHeight/2 - centerY, 2));
+        if (distance > avoidRadius) {
+          break;
+        }
+      } while (attempts < 10);
+      
+      return { x, y };
+    }
+
+    // Make element draggable (supports both mouse and touch)
+    function makeDraggable(element) {
+      let isDragging = false;
+      let offsetX, offsetY;
+
+      // Get position from mouse or touch event
+      function getEventPosition(e) {
+        if (e.touches && e.touches.length > 0) {
+          return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        }
+        return { x: e.clientX, y: e.clientY };
+      }
+
+      // Start dragging
+      function startDrag(e) {
+        if (e.target.tagName === 'BUTTON') return;
+        
+        isDragging = true;
+        const pos = getEventPosition(e);
+        offsetX = pos.x - element.offsetLeft;
+        offsetY = pos.y - element.offsetTop;
+        
+        // Bring to front
+        element.style.zIndex = ++zIndexCounter;
+        element.style.cursor = 'grabbing';
+        
+        // Prevent scrolling while dragging on mobile
+        if (e.type === 'touchstart') {
+          e.preventDefault();
+        }
+      }
+
+      // While dragging
+      function drag(e) {
+        if (!isDragging) return;
+        
+        // Prevent scrolling while dragging on mobile
+        if (e.type === 'touchmove') {
+          e.preventDefault();
+        }
+        
+        const pos = getEventPosition(e);
+        let newX = pos.x - offsetX;
+        let newY = pos.y - offsetY;
+        
+        // Keep within viewport bounds
+        const maxX = window.innerWidth - element.offsetWidth;
+        const maxY = window.innerHeight - element.offsetHeight;
+        
+        newX = Math.max(0, Math.min(newX, maxX));
+        newY = Math.max(0, Math.min(newY, maxY));
+        
+        element.style.left = newX + 'px';
+        element.style.top = newY + 'px';
+      }
+
+      // Stop dragging
+      function stopDrag() {
+        isDragging = false;
+        element.style.cursor = 'grab';
+      }
+
+      // Mouse events
+      element.addEventListener('mousedown', startDrag);
+      document.addEventListener('mousemove', drag);
+      document.addEventListener('mouseup', stopDrag);
+
+      // Touch events (for mobile)
+      element.addEventListener('touchstart', startDrag, { passive: false });
+      document.addEventListener('touchmove', drag, { passive: false });
+      document.addEventListener('touchend', stopDrag);
+    }
+
+    // Create a cheerful popup (Yes button behavior)
+    function createCheerPopup() {
+      const popup = document.createElement('div');
+      popup.className = 'popup';
+      popup.style.zIndex = ++zIndexCounter;
+      
+      const position = getRandomPosition();
+      popup.style.left = position.x + 'px';
+      popup.style.top = position.y + 'px';
+      
+      const message = getNextMessage();
+      const emoji = getRandomEmoji();
+      
+      popup.innerHTML = `
+        <div class="popup-content">
+          <span class="popup-emoji">${emoji}</span>
+          <p class="popup-message">${message}</p>
+        </div>
+        <span class="flower-decoration">🌸</span>
+      `;
+      
+      document.body.appendChild(popup);
+      makeDraggable(popup);
+      
+      // Show fixed buttons after first popup
+      popupCount++;
+      if (popupCount === 1) {
+        document.getElementById('fixedButtons').style.display = 'block';
+      }
+    }
+
+    // Create the "No" popup with Yes/No options
+    function createNoPopup() {
+      // Check if "No" popup already exists
+      if (document.querySelector('.popup-special')) return;
+      
+      const popup = document.createElement('div');
+      popup.className = 'popup popup-special';
+      popup.style.zIndex = ++zIndexCounter;
+      
+      // Center this popup
+      popup.style.left = '50%';
+      popup.style.top = '50%';
+      popup.style.transform = 'translate(-50%, -50%)';
+      
+      popup.innerHTML = `
+        <div class="popup-content">
+          <span class="popup-emoji">🤔</span>
+          <p class="popup-message">${noPopupMessage}</p>
+          <div class="popup-buttons">
+            <button class="btn btn-yes" id="secondaryYesBtn">真的</button>
+            <button class="btn btn-no" id="secondaryNoBtn">假的...</button>
+          </div>
+        </div>
+        <span class="flower-decoration">💜</span>
+      `;
+      
+      document.body.appendChild(popup);
+      
+      // Remove transform for dragging to work properly
+      setTimeout(() => {
+        const rect = popup.getBoundingClientRect();
+        popup.style.transform = 'none';
+        popup.style.left = rect.left + 'px';
+        popup.style.top = rect.top + 'px';
+        makeDraggable(popup);
+      }, 10);
+      
+      // Secondary Yes button - go to page2
+      document.getElementById('secondaryYesBtn').addEventListener('click', () => {
+        window.location.href = 'page2.html';
+      });
+      
+      // Secondary No button - show final message
+      document.getElementById('secondaryNoBtn').addEventListener('click', () => {
+        createFinalNoPopup();
+      });
+    }
+
+    // Create the final "No" popup (no more interaction)
+    function createFinalNoPopup() {
+      const popup = document.createElement('div');
+      popup.className = 'popup popup-final';
+      popup.style.zIndex = ++zIndexCounter;
+      
+      const position = getRandomPosition();
+      popup.style.left = position.x + 'px';
+      popup.style.top = position.y + 'px';
+      
+      popup.innerHTML = `
+        <div class="popup-content">
+          <span class="popup-emoji">🥺</span>
+          <p class="popup-message">${finalNoMessage}</p>
+        </div>
+        <span class="flower-decoration">🌷</span>
+      `;
+      
+      document.body.appendChild(popup);
+      makeDraggable(popup);
+    }
+
+    // Event Listeners
+    document.getElementById('mainYesBtn').addEventListener('click', createCheerPopup);
+    document.getElementById('mainNoBtn').addEventListener('click', createNoPopup);
+    document.getElementById('fixedYesBtn').addEventListener('click', createCheerPopup);
+
+    // Handle window resize to keep popups in bounds
+    window.addEventListener('resize', () => {
+      document.querySelectorAll('.popup').forEach(popup => {
+        const rect = popup.getBoundingClientRect();
+        const maxX = window.innerWidth - popup.offsetWidth;
+        const maxY = window.innerHeight - popup.offsetHeight;
+        
+        if (rect.left > maxX) popup.style.left = maxX + 'px';
+        if (rect.top > maxY) popup.style.top = maxY + 'px';
+      });
+    });
+
+    // Error handling for empty banks
+    if (messageBank.length === 0) {
+      console.error('Message bank is empty! Please add messages.');
+      messageBank.push('You are amazing!'); // Fallback
+    }
+    if (emojiBank.length === 0) {
+      console.error('Emoji bank is empty! Please add emojis.');
+      emojiBank.push('💖'); // Fallback
+    }
+  </script>
+
+</body>
+</html>

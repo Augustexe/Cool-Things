@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>You Made It! 💕</title>
+  
+  <!--
+  ╔════════════════════════════════════════════════════════════════════════════╗
+  ║                                                                            ║
+  ║   🎀 PAGE 2 - PLACEHOLDER 🎀                                               ║
+  ║                                                                            ║
+  ║   This page is shown when the user clicks "Yes" on the secondary popup.    ║
+  ║   Customize this page with your own content and theme!                     ║
+  ║                                                                            ║
+  ║   IDEAS FOR THIS PAGE:                                                     ║
+  ║   - A special message or letter                                            ║
+  ║   - A photo gallery                                                        ║
+  ║   - A playlist or video                                                    ║
+  ║   - Another interactive experience                                         ║
+  ║                                                                            ║
+  ╚════════════════════════════════════════════════════════════════════════════╝
+  -->
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ========================================
+       🎨 CUSTOMIZE: Color Scheme
+       Uses the same colors as index.html
+       for consistency
+       ======================================== */
+    :root {
+      --bg-page: #FAD4D4;
+      --bg-content: #FFF5F5;
+      --pink-light: #F8D4D8;
+      --pink-medium: #E8B4B8;
+      --accent-coral: #F27E63;
+      --accent-purple: #B8A4C9;
+      --text-dark: #5D4E4E;
+      --text-muted: #8B7B7B;
+      --border-soft: #E8C0C0;
+      --shadow-color: rgba(232, 180, 184, 0.4);
+      
+      --font-heading: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Nunito', 'Quicksand', sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg-page);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ========================================
+       DECORATIVE FLOATING CAT ELEMENTS
+       ======================================== */
+    .floating-decorations {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .floating-cat {
+      position: absolute;
+      font-size: 24px;
+      opacity: 0.6;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .floating-cat:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
+    .floating-cat:nth-child(2) { top: 20%; right: 8%; animation-delay: 1s; }
+    .floating-cat:nth-child(3) { top: 60%; left: 3%; animation-delay: 2s; }
+    .floating-cat:nth-child(4) { top: 75%; right: 5%; animation-delay: 0.5s; }
+    .floating-cat:nth-child(5) { top: 40%; left: 8%; animation-delay: 1.5s; }
+    .floating-cat:nth-child(6) { top: 85%; left: 15%; animation-delay: 3s; }
+    .floating-cat:nth-child(7) { top: 15%; right: 15%; animation-delay: 2.5s; }
+    .floating-cat:nth-child(8) { top: 50%; right: 3%; animation-delay: 4s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(10deg); }
+    }
+
+    .page-card {
+      background-color: var(--bg-content);
+      border: 3px solid var(--border-soft);
+      border-radius: 24px;
+      padding: 50px 60px;
+      text-align: center;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 12px 40px var(--shadow-color);
+      animation: fadeIn 0.6s ease-out;
+      position: relative;
+      z-index: 10;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .celebration-emoji {
+      font-size: 64px;
+      margin-bottom: 24px;
+      display: block;
+      animation: bounce 1s ease infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    h1 {
+      font-family: var(--font-heading);
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 20px;
+    }
+
+    /* ========================================
+       🎨 CUSTOMIZE: Main Content
+       Add your special message, images,
+       or any content you want here!
+       ======================================== */
+    .content {
+      color: var(--text-muted);
+      font-size: 1.15rem;
+      line-height: 1.8;
+      margin-bottom: 30px;
+    }
+
+    .content p {
+      margin-bottom: 16px;
+    }
+
+    .back-link {
+      display: inline-block;
+      color: var(--accent-coral);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 12px 32px;
+      border: 2px solid var(--accent-coral);
+      border-radius: 50px;
+      transition: all 0.3s ease;
+    }
+
+    .back-link:hover {
+      background-color: var(--accent-coral);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    /* Placeholder styling */
+    .placeholder-box {
+      background: linear-gradient(135deg, var(--pink-light), var(--pink-medium));
+      border-radius: 16px;
+      padding: 40px;
+      margin: 30px 0;
+      color: var(--text-muted);
+    }
+
+    .placeholder-box h3 {
+      font-family: var(--font-heading);
+      color: var(--text-dark);
+      margin-bottom: 12px;
+    }
+
+    /* ========================================
+       📱 MOBILE RESPONSIVE STYLES
+       ======================================== */
+    @media screen and (max-width: 768px) {
+      .page-card {
+        padding: 40px 35px;
+      }
+
+      h1 {
+        font-size: 2.2rem;
+      }
+
+      .celebration-emoji {
+        font-size: 52px;
+      }
+    }
+
+    @media screen and (max-width: 430px) {
+      body {
+        padding: 15px;
+        align-items: flex-start;
+        padding-top: 40px;
+      }
+
+      .page-card {
+        padding: 30px 24px;
+        border-radius: 20px;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+        margin-bottom: 16px;
+      }
+
+      .celebration-emoji {
+        font-size: 48px;
+        margin-bottom: 20px;
+      }
+
+      .content {
+        font-size: 1rem;
+        line-height: 1.7;
+      }
+
+      .placeholder-box {
+        padding: 25px 20px;
+        margin: 24px 0;
+      }
+
+      .placeholder-box h3 {
+        font-size: 1rem;
+      }
+
+      .placeholder-box p {
+        font-size: 0.95rem;
+      }
+
+      .back-link {
+        padding: 12px 28px;
+        font-size: 0.95rem;
+      }
+    }
+
+    @media screen and (max-width: 375px) {
+      .page-card {
+        padding: 24px 20px;
+      }
+
+      h1 {
+        font-size: 1.6rem;
+      }
+
+      .celebration-emoji {
+        font-size: 42px;
+      }
+
+      .content {
+        font-size: 0.95rem;
+      }
+    }
+
+    /* Prevent horizontal scroll */
+    html, body {
+      overflow-x: hidden;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Background Decorations -->
+  <div class="floating-decorations">
+    <!-- 🎨 CUSTOMIZE: Change these cat emojis to anything you like! -->
+    <span class="floating-cat">🐱</span>
+    <span class="floating-cat">😺</span>
+    <span class="floating-cat">🐈</span>
+    <span class="floating-cat">😸</span>
+    <span class="floating-cat">😻</span>
+    <span class="floating-cat">😼</span>
+    <span class="floating-cat">😽</span>
+    <span class="floating-cat">🐾</span>
+  </div>
+
+  <div class="page-card">
+    
+    <!-- ========================================
+         🎨 CUSTOMIZE: Celebration Emoji
+         ======================================== -->
+    <span class="celebration-emoji">🐑</span>
+
+    <!-- ========================================
+         🎨 CUSTOMIZE: Page Title
+         ======================================== -->
+    <h1>徐悦涵～</h1>
+
+    <!-- ========================================
+         🎨 CUSTOMIZE: Main Content
+         Replace this placeholder with your
+         special message, images, videos, etc.
+         ======================================== -->
+    <div class="content">
+      <p>
+        开心点了吗<br>小宝宝
+      </p>
+      
+      <div class="placeholder-box">
+        <p>
+         真的太美了，男人看了来月经，<br>
+         女人看了发神经，<br>
+         这是抑郁症的克星，是植物人的闹钟，<br>
+         美出了村里五保护对寡妇的思念和爱而不得，<br>
+         帅到眼泪从嘴角流出淹成钱塘江大潮，太美了，<br>
+         是神是我的玫瑰泪照亮了<br> 我黑暗的生命让我的世界有了意义，<br>
+         我飞跑我猛跳，我在20楼的阳台翘起了探戈，<br>
+         让我意识到神确实存在，我被美到流泪不止从此世界不再缺水<br>
+         所以小宝宝不开心的话，就找我，别看了
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Back to main page link -->
+    <a href="index.html" class="back-link">← 没按爽</a>
+
+  </div>
+
+</body>
+</html>
